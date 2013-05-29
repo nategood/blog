@@ -1,0 +1,8 @@
+extends base
+
+block content
+  h1 Posts
+  ul.articles
+    each article in articles
+      li
+        a(href="#{article.link}") #{article.link}

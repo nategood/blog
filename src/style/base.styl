@@ -1,0 +1,84 @@
+primary = #333
+back = #eee
+font-color = #333
+font-size = 16px
+font-face = Petrona, serif
+font-face-sans = 'Titillium Web', Helvetica, sans-serif
+width = 500px
+gutter = 150px
+unit = 20px
+forehead = 50px
+
+html, body
+  margin 0
+  padding 0
+  font font-size font-face
+  color font-color
+  line-height 1.5
+
+#guts
+  width width
+  padding forehead gutter 0 gutter
+  margin auto
+  text-shadow 2 2 0 rgba(0, 0, 0, 0.5)
+
+h1, h2, h3
+  margin 0
+  font-size 64px
+  font-weight normal
+
+a
+  color font-color
+
+a:hover
+  color font-color + 10%
+
+h2
+  font-size 32px
+
+h3
+  font-size 24px
+
+header
+  position fixed
+  width 100%
+  // box-shadow 0 0 10px #ccc
+  text-align center
+  padding unit * 0.5 0
+  color #ccc
+  background #eee
+  h1
+    font-size 14px
+    font-family font-face-sans
+    text-transform uppercase
+    letter-spacing 5px
+
+nav
+  position fixed
+  margin forehead 0 0 unit
+  width gutter
+  color #ccc
+  font-family Arial
+  text-weight normal
+  font-size 12px
+  a
+    color #ccc
+    text-decoration underline
+  ul
+    padding 0
+    margin 0
+    list-style none
+    li
+      display block
+      margin 0 0 1px 0
+      a
+        padding 0 unit * 0.5
+        display block
+        color #ccc
+        text-decoration none
+      a:hover
+        color #ccc
+        background #eee
+
+ul.articles
+  list-style none
