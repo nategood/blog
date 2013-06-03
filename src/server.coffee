@@ -16,6 +16,13 @@ init = (dir)->
   rand: () -> cache[names[Math.floor(Math.random() * names.length)]]
   links: () -> names.map (name) -> {link: "/" + name.replace(".md", "")}
 
+# todo break out into conf file system
+conf =
+  analytics:
+    account: "UA-20300690-1"
+    domain: "nategood.com"
+  port: 7890
+
 basedir = __dirname.replace /\/src$/, ""
 cache = init basedir + "/content/articles"
 
@@ -28,21 +35,26 @@ app.use "/assets", express.static(basedir + "/assets")
 # Routes
 app.get "/", (req, res) ->
   res.render "home.jade",
+    conf: conf
     intro: read basedir + "/content/partials/intro.md"
-    articles: [cache.rand(), cache.rand()]
+    # articles: [cache.rand(), cache.rand()]
 
 app.get "/dev/random", (req, res) ->
+  # todo add Location header to actual article URL
   res.render "article.jade",
+    conf: conf
     content: cache.rand()
 
 app.get "/home/nate/posts", (req, res) ->
   res.render "posts.jade",
+    conf: conf
     articles: cache.links()
 
 app.get "/:article", (req, res, next) ->
   content = cache.get "#{req.params.article}.md"
-  res.status(404).render("errors/404.jade") unless content
+  res.status(404).render("errors/404.jade", conf: conf) unless content
   res.render "article.jade",
+    conf: conf
     content: content
 
-server = app.listen 8989
+server = app.listen conf.port

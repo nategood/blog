@@ -36,7 +36,7 @@ Using this `extend` method we created, we create a new object
         }
     };
     var nathan = extend(Person);
-    nathan.name = &quot;Nathan&quot;;
+    nathan.name = "Nathan";
     nathan.sayName();
 
 We've just created a `nathan` object from another object, `Person`.
@@ -51,16 +51,16 @@ So we now have an example of Prototypal's version of "object
 instantiation".  What about subclassing aka inheritance?  In my
 [previous post](http://blog.nategood.com/finally-grasping-prototypical-object-oriented),
 I mentioned that in Prototypal OOP inheritance and instantiation are
-the same thing.  Let's consider this example&hellip;
+the same thing.  Let's consider this example...
 
     var Animal = {
-        kingdom: &quot;Animalia&quot;
+        kingdom: "Animalia"
     };
 
     var Dog = extend(Animal);
-    Dog.genus = &quot;Canis&quot;;
+    Dog.genus = "Canis";
     Dog.speak = function() {
-        console.log(&quot;Bark bark!&quot;);
+        console.log("Bark bark!");
     };
 
     var Sparky = extend(Dog);
@@ -89,13 +89,13 @@ written as `var nathan = Person.extend();`.
 
 // Define a Person by extending Object
 var Person = Object.extend()
-Person.name = &quot;John Doe&quot;;
+Person.name = "John Doe";
 Person.sayName = function() {
     console.log();
 };
 
 var nathan = Person.extend();
-nathan.name = &quot;Nathan&quot;;
+nathan.name = "Nathan";
 nathan.sayName();
 
 _Another note: you may be tempted to add this to add this method to `Object.prototype` but **beware**! Extending native types can get you in trouble, in particular when using objects as dictionaries._
@@ -114,7 +114,7 @@ that defines the before unique to our new class (in this case `Dog`).
     Object.extend = function (def) {
         var F = function() {};
         F.prototype = this;
-        return typeof def == &quot;object&quot; ? $.extend(true, new F(), def); : new F();
+        return typeof def == "object" ? $.extend(true, new F(), def); : new F();
     };
 
 _Note: This snippet uses the jQuery [`extend`
@@ -125,13 +125,13 @@ functionality yourself if you don't want to include jQuery._
 Our definition for `Dog` now looks something like this:
 
     var Animal = Object.extend({
-        kingdom: &quot;Animalia&quot;
+        kingdom: "Animalia"
     });
 
     var Dog = Animal.extend({
-        genus: &quot;Canis&quot;,
+        genus: "Canis",
         speak: function() {
-            console.log(&quot;Bark bark!&quot;);
+            console.log("Bark bark!");
         }
     });
 
