@@ -1,0 +1,14 @@
+{
+  "port": 7890,
+  "title": "Nate Good: A Software Engineer's Core Dump",
+  "dev": true,
+  "serveStatic": true,
+  "location": {
+    "articles": "/content/articles",
+    "partials": "/content/partials"
+  },
+  "analytics": {
+    "account": "UA-20300690-1",
+    "domain": "nategood.com"
+  }
+}

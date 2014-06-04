@@ -7,15 +7,34 @@ html
     link(href='/assets/css/base.css', rel='stylesheet', type='text/css')
   body
     header
-      h1 Nate Good: A Software Engineer's Core Dump
+      h1 #{conf.title}
     nav ls /
       ul
         li
           a(href='/') /home/nate
         li
-          a(href='/home/nate/posts') /home/nate/posts
+          a(href='/posts') /home/nate/posts
         li
           a(href='/dev/random') /dev/random
+      ul(style="margin-top: 10px")
+        li ls /projects
+          ul
+            li
+              a(href="http://firstbytes.org") /first/bytes/society
+            li
+              a(href="http://phphttpclient.com") /httpful
+            li
+              a(href="https://github.com/nategood/commando") /commando
+            li
+              a(href="#") /split
+      ul(style="margin-top: 10px")
+        li whoami
+          ul
+            li
+              a(href="http://twitter.com/nategood") twitter
+            li
+              a(href="https://github.com/nategood") github
+
     div#guts
       block content
     footer

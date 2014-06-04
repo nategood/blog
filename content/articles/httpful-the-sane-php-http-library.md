@@ -1,6 +1,6 @@
 # Httpful: The Sane PHP HTTP Client Library
 
-[cUrl](http://curl.haxx.se/) is awesome.  Sadly cUrl in PHP is not.  More often than not, using the PHP cUrl library means digging through the [curl_setopt page](http://php.net/manual/en/function.curl-setopt.php) to figure out which poorly named constant is needed to tune our HTTP requests.  Alternatives like HTTP_Request and Zend_Http aren't much more usable or are too bloated for the common case.  One evening while plugging away at some code to migrate us from BaseCamp to FogBugz, I decided I had enough.  That evening Httpful came to be.
+[cUrl](http://curl.haxx.se/) is awesome.  Sadly cUrl in PHP is not.  More often than not, using the PHP cUrl library means digging through the [`curl_setopt` page](http://php.net/manual/en/function.curl-setopt.php) to figure out which poorly named constant is needed to tune our HTTP requests.  Alternatives like HTTP_Request and Zend_Http aren't much more usable or are too bloated for the common case.  One evening while plugging away at some code to migrate us from BaseCamp to FogBugz, I decided I had enough.  That evening Httpful came to be.
 
 ## A Readable Curl HTTP Client Alternative
 
@@ -98,3 +98,8 @@ Finally have a landing page for the project.  Checkout the [Httpful PHP HTTP Cli
 ## tl;dr
 
 _The PHP cURL library is ugly and unintuitive.  Httpful is a sane HTTP library alternative that includes chaining, template requests, easy GPPD support, built in parsing and more.  It is on [GitHub](https://github.com/nategood/httpful)._
+
+---
+
+ - *Title* Httpful: The Sane PHP HTTP Library
+ - *Keywords* http, php, rest, restful, httpful, curl

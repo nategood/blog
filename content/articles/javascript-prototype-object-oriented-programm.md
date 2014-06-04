@@ -87,16 +87,16 @@ our `extend` method), it's prototype will be `Object`.
 `var nathan = extend(Person);` from our first example,can now be
 written as `var nathan = Person.extend();`.
 
-// Define a Person by extending Object
-var Person = Object.extend()
-Person.name = "John Doe";
-Person.sayName = function() {
-    console.log();
-};
+    // Define a Person by extending Object
+    var Person = Object.extend()
+    Person.name = "John Doe";
+    Person.sayName = function() {
+        console.log();
+    };
 
-var nathan = Person.extend();
-nathan.name = "Nathan";
-nathan.sayName();
+    var nathan = Person.extend();
+    nathan.name = "Nathan";
+    nathan.sayName();
 
 _Another note: you may be tempted to add this to add this method to `Object.prototype` but **beware**! Extending native types can get you in trouble, in particular when using objects as dictionaries._
 
