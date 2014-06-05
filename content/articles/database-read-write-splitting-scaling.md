@@ -1,6 +1,6 @@
 # The Intricacies of Read-Write Splitting
 
-_Not long ago, we set out to reconsider how we leveraged our master-slave infrastructure. This article describes a lot of the things to consider when thinking about read write splitting. Much of what is discussed paved the way for our revamped Policy Driven Read-Write Splitting Framework._
+_Not long ago, we set out to reconsider our approach to read-write splitting. This article describes a lot of the things to consider when thinking about read write splitting. Much of what is discussed paved the way for our Policy Driven Read-Write Splitting approach that I'll share in a future post._
 
 The task of read-write splitting in relational database backed applications is a common first major step in scaling out horizontally. On its surface, read-write splitting seems like a somewhat trivial task. The immediate instinct for someone that has yet to embark into the land of splitting is typically just send reads to "slaves" and writes to "master". Right?
 
@@ -10,14 +10,13 @@ As we'll uncover, there are all sorts of things to consider when determining whe
 
 In the dream world, one might think writes to a master would be immediately propagated to slaves and that there would be guranteed consistency across master and all slaves. In reality, this doesn't happen.
 
-With many databases (relational or not), eventual consistency is a reality. When a write hits the master, there is enevitably a delay between the time data is written to the master and the time it is written to and accessible from the slave. To further compliacte things, databases that support transactions mean that data will "written" during the transaction is only accessible to the current connection to master, leaving slaves in the dark until a commit happens.
+With many databases (relational or not), eventual consistency is a reality. When a write hits the master, there is enevitably a delay between the time data is written to the master and the time it is written to and accessible from the slave. Eventual consistency is an acceptable tradeoff when scaling systems out, but creates some challenges for the developer.
+
+To further compliacte things, databases that support transactions mean that data "written" during the transaction is only accessible to the current connection to master, leaving slaves in the dark until a commit happens.
 
 We call this delay **Lag**.
 
 As a result of lag, we cannot simply just assume blindly reading from the slave is okay because we may read stale data when reading stale data is unacceptable. We have to be strategic about when we read from slaves.
-
-> ### Side Note: Eventual is okay!
->  In many cases, eventual consistency is actually a good thing. Waiting for a write to be propagated to all slaves before continuing could become an incredible bottleneck. This is especially true for slaves that may not be "close" to the master (e.g. a data center across the country set up for geographic redundancy). It is also not unusual for slaves to have slaves themselves, futher complicating the chain of writes. Eventual consistency is actually an acceptable tradeoff. As the now infamous "CAP Theorom" explores, when scaling out, we often have to make at least one major tradeoff like eventual consistency.
 
 ## Measuring Lag
 
@@ -44,7 +43,7 @@ There may be some cases where reading stale data is acceptable within reason. Fo
 
 ### Event-Based Tolerance
 
-Event-Based tolerance is even more useful than their Time-Based counterpart, however they can be a little bit more work to be used most effectively.
+Event-Based tolerance is even more useful than its Time-Based counterpart, however they can be a little bit more work to be used most effectively.
 
 Event-Based tolerance can be used very similarly as the aforementioned Time-Based scenario, that is I'm okay to make a read if the data is within X events, but it becomes far more useful when we keep track of individual events.
 
@@ -62,6 +61,6 @@ The developer should be able to define acceptable tolerane levels quickly and ma
 
 ## Onward!
 
-Now that we have established a nice way to measure lag and define acceptable lag tolerance levels, we can start to discuss what an interface for communicating with a master-slave infrastructure might look like. In a [future article](#), we'll explore how to encorporate these ideas of lag tolerance and informed read/write splitting into a database access layer that promotes low coupling, cuts down on boiler plate code, and gets out of the developer's way. We call this approach Policy Driven Read-Write Splitting.
+Now that we have established a nice way to measure lag and define acceptable lag tolerance levels, we can start to discuss what an interface for communicating with a master-slave infrastructure might look like. In a future article, we'll explore how to encorporate these ideas of lag tolerance and informed read/write splitting into a database access layer that promotes low coupling, cuts down on boiler plate code, and gets out of the developer's way. We call this approach Policy Driven Read-Write Splitting.
 
 _If you enjoyed this article, I highly recommend checking out the [presentation](http://www.slideshare.net/billkarwin/read-write-split) by Bill Karwin from [Percona](http://www.percona.com/) on defining lag and the basics of read write splitting. Much of our exploration was driven by his webinar. I highly recommend checking it out as it served as the basis for much of this article and lead to our Policy-Driven approach. Many kudos to Bill and the Percona team._
