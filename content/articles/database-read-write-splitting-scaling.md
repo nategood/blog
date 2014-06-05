@@ -12,7 +12,7 @@ In the dream world, one might think writes to a master would be immediately prop
 
 With many databases (relational or not), eventual consistency is a reality. When a write hits the master, there is enevitably a delay between the time data is written to the master and the time it is written to and accessible from the slave. Eventual consistency is an acceptable tradeoff when scaling systems out, but creates some challenges for the developer.
 
-To further compliacte things, databases that support transactions mean that data "written" during the transaction is only accessible to the current connection to master, leaving slaves in the dark until a commit happens.
+To further complicate things, databases that support transactions mean that data "written" during the transaction is only accessible to the current connection to master, leaving slaves in the dark until a commit happens.
 
 We call this delay **Lag**.
 
@@ -20,13 +20,13 @@ As a result of lag, we cannot simply just assume blindly reading from the slave 
 
 ## Measuring Lag
 
-In order to "do better" we have to have a way of determining when its acceptable to read from a slave. In order to do that, we need to define some metrics for measuring Lag.
+In order to do better we have to have a way of determining when it is acceptable to read from a slave. In order to do that, we need to define some metrics for measuring lag.
 
 There are two common ways to measure lag. The simplest, and most widely applicable is **Time-Based Lag**. Time-Based Lag, as you might guess, measures the delay between a master and a slave in terms of time. This is commonly measured as how much time has elapsed from the time a piece of data was written to the master to the time that same piece of data was written to a slave.
 
-The second, and in many cases, more useful, is **Event-Based Lag**. Event-Based Lag is measure in terms of how many "events" or "writes" have happened on master that have yet to happen on the slave. It is often even more useful to know the answer to "Has event E happened on the slave S?" as opposed to "How many events is slave S behind the master?". More on this later.
+The second, and in many cases, more useful, is **Event-Based Lag**. Event-Based Lag is measure in terms of how many events or writes* have happened on master that have yet to happen on the slave. It is often even more useful to know the answer to "Has event E happened on the slave S?" as opposed to "How many events is slave S behind the master?". More on this later.
 
-_Determining what an event is will likely be vendor and even configuration specific. An event would simply be the log item (a row, a statement, etc.)._
+_*Events aren't necessarily a one to one mapping of writes. Determing what an event is will likely be vendor and even configuration specific. Having said that, the general idea of keeping a tab on whether or not a slave has caught up to a particular event is useful regardless of what consititutes an event._
 
 
 ## Defining Tolerance
@@ -55,9 +55,9 @@ When a user wrote their latest comment, we can record that event. Let's call thi
 
 As we saw in our discussion of tolerance, different read scenarios have different tolerance levels. Using a single approach for your entire app like "send all reads to the slave if the slave is within 2 seconds of the master" is far too general and even dangerous.
 
-Instead of these blanket generalizations, we should give the developer the tools they need to make decisions about acceptable read tolerance levels based on what they're apps requirements are at any given time in the app.
+Instead of these blanket generalizations, we should give the developer the tools they need to make decisions about acceptable read tolerance levels based on what their apps requirements are at any given time in the app.
 
-The developer should be able to define acceptable tolerane levels quickly and make decisions on when to use those tolerance levels, without introducing unecessary complexity or tight coupling between the application and the database layer.
+The developer should be able to define acceptable tolerance levels quickly and make decisions on when to use those tolerance levels, without introducing unecessary complexity or tight coupling between the application and the database layer.
 
 ## Onward!
 
