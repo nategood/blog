@@ -8,9 +8,9 @@ As we'll uncover, there are all sorts of things to consider when determining whe
 
 ## Consistency
 
-In the dream world, one might think writes to a master would be immediately propagated to slaves and that there would be guranteed consistency across master and all slaves. In reality, this doesn't happen.
+In the dream world, one might think writes to a master would be immediately propagated to slaves and that there would be guaranteed consistency across master and all slaves. In reality, this doesn't happen.
 
-With many databases (relational or not), eventual consistency is a reality. When a write hits the master, there is enevitably a delay between the time data is written to the master and the time it is written to and accessible from the slave. Eventual consistency is an acceptable tradeoff when scaling systems out, but creates some challenges for the developer.
+With many databases (relational or not), eventual consistency is a reality. When a write hits the master, there is inevitably a delay between the time data is written to the master and the time it is written to and accessible from the slave. Eventual consistency is an acceptable trade-off when scaling systems out, but creates some challenges for the developer.
 
 To further complicate things, databases that support transactions mean that data "written" during the transaction is only accessible to the current connection to master, leaving slaves in the dark until a commit happens.
 
@@ -26,7 +26,7 @@ There are two common ways to measure lag. The simplest, and most widely applicab
 
 The second, and in many cases, more useful, is **Event-Based Lag**. Event-Based Lag is measure in terms of how many events or writes* have happened on master that have yet to happen on the slave. It is often even more useful to know the answer to "Has event E happened on the slave S?" as opposed to "How many events is slave S behind the master?". More on this later.
 
-_*Events aren't necessarily a one to one mapping of writes. Determing what an event is will likely be vendor and even configuration specific. Having said that, the general idea of keeping a tab on whether or not a slave has caught up to a particular event is useful regardless of what consititutes an event._
+_*Events aren't necessarily a one to one mapping of writes. Determining what an event is will likely be vendor and even configuration specific. Having said that, the general idea of keeping a tab on whether or not a slave has caught up to a particular event is useful regardless of what constitutes an event._
 
 
 ## Defining Tolerance
@@ -57,10 +57,10 @@ As we saw in our discussion of tolerance, different read scenarios have differen
 
 Instead of these blanket generalizations, we should give the developer the tools they need to make decisions about acceptable read tolerance levels based on what their apps requirements are at any given time in the app.
 
-The developer should be able to define acceptable tolerance levels quickly and make decisions on when to use those tolerance levels, without introducing unecessary complexity or tight coupling between the application and the database layer.
+The developer should be able to define acceptable tolerance levels quickly and make decisions on when to use those tolerance levels, without introducing unnecessary complexity or tight coupling between the application and the database layer.
 
 ## Onward!
 
-Now that we have established a nice way to measure lag and define acceptable lag tolerance levels, we can start to discuss what an interface for communicating with a master-slave infrastructure might look like. In a future article, we'll explore how to encorporate these ideas of lag tolerance and informed read/write splitting into a database access layer that promotes low coupling, cuts down on boiler plate code, and gets out of the developer's way. We call this approach Policy Driven Read-Write Splitting.
+Now that we have established a nice way to measure lag and define acceptable lag tolerance levels, we can start to discuss what an interface for communicating with a master-slave infrastructure might look like. In a future article, we'll explore how to incorporate these ideas of lag tolerance and informed read/write splitting into a database access layer that promotes low coupling, cuts down on boiler plate code, and gets out of the developer's way. We call this approach Policy Driven Read-Write Splitting.
 
-_If you enjoyed this article, I highly recommend checking out the [presentation](http://www.slideshare.net/billkarwin/read-write-split) by Bill Karwin from [Percona](http://www.percona.com/) on defining lag and the basics of read write splitting. Much of our exploration was driven by his webinar. I highly recommend checking it out as it served as the basis for much of this article and lead to our Policy-Driven approach. Many kudos to Bill and the Percona team._
+_If you enjoyed this article, I highly recommend checking out the [presentationn](http://www.slideshare.net/billkarwin/read-write-split) by Bill Karwin from [Percona](http://www.percona.com/) on defining lag and the basics of read write splitting. Much of our exploration was driven by his webinar. I highly recommend checking it out as it served as the basis for much of this article and lead to our Policy-Driven approach. Many kudos to Bill and the Percona team._
