@@ -1,6 +1,6 @@
 {
   "port": 7890,
-  "title": "Nate Good: A Software Engineer's Core Dump",
+  "title": "Nate Good",
   "dev": true,
   "serveStatic": true,
   "location": {
